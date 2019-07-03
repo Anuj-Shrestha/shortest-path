@@ -7,3 +7,15 @@
     margin: 0 auto;
     border: 1px solid black;
 }
+.starting-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.start-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    background: silver;
+}
