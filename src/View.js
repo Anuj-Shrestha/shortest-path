@@ -7,7 +7,6 @@ var View = (function() {
 	function View() {
 
 		this.getMainWrapper = function() {
-      console.log('here')
 			var element = document.getElementsByClassName('main-wrapper')[0];
 
 			return element;

@@ -16,6 +16,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100px;
+    width: 200px;
+    height: 100px;
     background: silver;
 }

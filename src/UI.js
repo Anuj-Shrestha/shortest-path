@@ -64,13 +64,13 @@ var UI = (function() {
 
 		this.makeBox = function(x, y, width, height) {
 			ctx.rect(x, y, width, height);
-			ctx.fillStyle = 'black';
-			ctx.fill();
+			ctx.fillStyle = 'brown'
+			ctx.fill()
 		}
 
 		this.writeText = function(text, font, x, y, color) {
 			if(color === undefined) {
-				color = "#fff";
+				color = "#000";
 			}
 			ctx.font =  font + 'px Creepster';
 			ctx.fillStyle = color;
@@ -78,14 +78,32 @@ var UI = (function() {
 		}
 		
 		this.drawDottedPath = function(x, y, mx, my) {
-		ctx.beginPath(); 
-		ctx.lineWidth = "2";
-		ctx.strokeStyle = "black"; // Black path
-		ctx.setLineDash([5, 15]);
-		ctx.moveTo(x, y);
-		ctx.lineTo((x + mx) * 0.5, (y + my) * 0.5);
-		ctx.stroke(); // Draw it
+			console.log('here at drawdotted')
+			ctx.beginPath(); 
+			ctx.lineWidth = "2";
+			ctx.strokeStyle = "black"; // Black path
+			ctx.setLineDash([5, 15]);
+			ctx.moveTo(x, y);
+			ctx.lineTo((x + mx) * 0.5, (y + my) * 0.5);
+			ctx.stroke(); // Draw it
 		}
+
+		this.drawBoard = function(bw, bh, width, p){
+			for (var x = 0; x <= bw; x += width) {
+				ctx.moveTo(0.5 + x + p, p);
+				ctx.lineTo(0.5 + x + p, bh + p);
+			}
+		
+		
+			for (var x = 0; x <= bh; x += width) {
+				ctx.moveTo(p, 0.5 + x + p);
+				ctx.lineTo(bw + p, 0.5 + x + p);
+			}
+		
+			ctx.strokeStyle = "black";
+			ctx.stroke();
+		}
+		
 
 	}
 
