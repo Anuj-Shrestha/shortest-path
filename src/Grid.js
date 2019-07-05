@@ -9,7 +9,7 @@ function Grid() {
     this.y;
 
  
-    this.gridWidth = 50;
+    this.gridWidth = 40;
     this.gridPadding = 5;
     this.gridLengthX = 0;
     this.gridLengthY = 0;

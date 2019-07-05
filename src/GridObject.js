@@ -6,7 +6,7 @@ function GridObject() {
     this.type = 'black';
     this.width;
     this.height;
-    this.gridWidth = 50;
+    this.gridWidth = 40;
     this.gridPadding = 5;
     var that = this;
     
