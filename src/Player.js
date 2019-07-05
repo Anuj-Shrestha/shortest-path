@@ -1,53 +1,54 @@
 function Player() {
 
-	var gameUI = GameUI.getInstance();
-	var canvas = gameUI.getCanvas();
+	var gameUI = UI.getInstance();
 	var ctx = gameUI.getContext();
 
-	var LETTER_A = 65;
-	var LETTER_D = 68;
-	var LETTER_W = 87;
-	var LETTER_S = 83;
+	var element = new Image();
+	element.src = "src/assets/images/player.png";
+	element.onload = function() {
+		console.log('image loaded')
+	}
+	var playerDistance;
 
-	
 	this.x;
 	this.y;
-	this.velX = 1;
-	this.velY = 1;
 
-	this.centerX = this.x + this.width / 2;
-	this.centerY = this.y + this.height / 2;
-	this.playerRotation;
+	this.sX = 190 * 1;
+	this.sY = 0;
+	this.sWidth = 180;
+	this.width = 100;
+	this.height = 100;
+	this.increment = 3;
+
+	this.initialVelocity = 1.5;
+	this.velX = this.initialVelocity;
+	this.velY = this.initialVelocity;
+	this.destinationX;
+	this.destinationY;
 	
-	this.initialVelocity = 3;
+	this.collisionFlag = false;
 
 	var that = this;
 
-	this.setPosition = function(x, y) {
-		that.x = x;
-		that.y = y;
-	}
-
-	this.keyPressed = function(keyState) {
-	
-    if (keyState.hasOwnProperty(LETTER_W) || keyState.hasOwnProperty(LETTER_S) || 
-    	keyState.hasOwnProperty(LETTER_A) || keyState.hasOwnProperty(LETTER_D)) {
-    	return true;
-    }
-     
-    return false;
-	}
-
-	this.setDimension = function(width, height) {
-		that.width = width;
-		that.height = height;
-	}
-
-	this.draw = function(rotation, keyState) {
-	
+	this.draw = function() {
+		gameUI.draw(element, that.sX, that.sY, that.sWidth, that.sWidth, that.x, that.y, that.width, that.height);
 	}
 	
-	this.update = function(keyState) {
-		
+	this.update = function(gameGrid, startPosition) {
+		that.x = startPosition.x * gameGrid.gridWidth
+		that.y = startPosition.y * gameGrid.gridWidth
+	}
+
+	this.elementCollisionCheck = function(collider) {
+
+		var collisionDirection = Utils.getCollisionDirection(collider, that);
+
+		if (collisionDirection == 'l' || collisionDirection == 'r') {
+		  collider.velX = 0;
+		} else if (collisionDirection == 't' || collisionDirection == 'b') {
+		  collider.velY = 0;
+		}
+
+		return collisionDirection;
 	}
 }

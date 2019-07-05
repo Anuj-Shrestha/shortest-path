@@ -87,8 +87,7 @@ var Utils = (function() {
         return filteredNodes.reduce((minNode, nextNode) => nextNode.cost < minNode.cost ? nextNode : minNode, filteredNodes[0])
     }
 
-    var getShortestPathArray = function(gridArray) {
-        console.log('find shortest paths for', gridArray)
+    var getShortestPathArray = function(gridArray, startPosition) {
         // var pathGridArray = []
         var totalCosts = []
         var prevNodes = []
@@ -96,7 +95,7 @@ var Utils = (function() {
         var visitedNodes = []
         for (let i=0; i < gridArray.length; i++) {
             for (let j=0; j < gridArray[i].length; j++) {
-                if (gridArray[i][j] == 'S') {
+                if (i == startPosition.y && j == startPosition.x) {
                     minPQ.push({x: j, y: i, cost: 0})
                     totalCosts.push({x: j, y: i, cost: 0})
                     prevNodes.push({x: j, y: i, prevX: j, prevY: i})

@@ -1,6 +1,5 @@
 
 const shortestPath = (function() {
-	console.log('inside main')
 	let newInstance;
 	
 	function shortestPath() {
@@ -10,7 +9,6 @@ const shortestPath = (function() {
 		var dijkstra;
 
 		this.init = () => {
-			console.log('inside main init')
 			dijkstra = new Dijkstra()
 
 			//main starting screen

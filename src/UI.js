@@ -78,7 +78,6 @@ var UI = (function() {
 		}
 		
 		this.drawDottedPath = function(x, y, mx, my) {
-			console.log('here at drawdotted')
 			ctx.beginPath(); 
 			ctx.lineWidth = "2";
 			ctx.strokeStyle = "black"; // Black path

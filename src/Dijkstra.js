@@ -16,38 +16,51 @@ function Dijkstra() {
 	var requestAnimation;
 	var stopped = false;
 	
+	var gameGrid
 
-	var shortestPathArray;
-	var endPosition = {x: 0, y: 0}
-	var that = this;
+	var startPosition = {x: 1, y: 2}
+	var endPosition = {x: 7, y: 7}
+	var gridArray = [['S', 'w', 'P', 'P', 'P', 'W', 'P', 'P'],
+		['P', 'W', 'P', 'P', 'W', 'P', 'P', 'P'],
+		['P', 'P', 'P', 'P', '', 'w', 'P', 'P'],
+		['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'],
+		['P', 'W', 'W', 'W', 'w', 'P', 'P', 'P'],
+		['P', 'P', 'P', 'P', 'w', 'P', 'P', 'P'],
+		['P', 'P', 'w', 'P', 'P', 'P', 'P', 'P'],
+		['P', 'P', 'P', 'P', 'W', 'P', 'P', 'P']]
+	// let gridArray = [['P', 'w', 'P', 'P'],['P', 'P', 'P', 'P'],['P', 'P', 'P', 'P'],['P', 'P', 'P', 'S']]	var that = this;
 
+	var enemy;
+	var player;
+	let that = this
 
 	this.init = function() {
 
 		gameUI.setWidth(WIDTH);
 		gameUI.setHeight(HEIGHT);
 		gameUI.show();
-	
-
-		let gridArray = [['S', 'w', 'P', 'P', 'P', 'W', 'P', 'P'],
-			['P', 'W', 'P', 'P', 'W', 'P', 'P', 'P'],
-			['P', 'P', 'P', 'P', 'w', 'w', 'P', 'P'],
-			['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'],
-			['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'],
-			['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'],
-			['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P']]
-		// let gridArray = [['P', 'w', 'P', 'P'],['P', 'P', 'P', 'P'],['P', 'P', 'P', 'P'],['P', 'P', 'P', 'S']]
-		gameGrid = gridArray
-
+		
 		that.generateGrid(gridArray);
 		that.bindKeysPressed();
+
+		enemy = new Enemy()
+		enemy.x = endPosition.x
+		enemy.y = endPosition.y
+		enemy.width = gameGrid.gridWidth
+		enemy.height = gameGrid.gridWidth
+
+		player = new Player()
+		player.x = startPosition.x
+		player.y = startPosition.y
+		player.width = gameGrid.gridWidth
+		player.height = gameGrid.gridWidth
+
 		var startGameLoop = function() {
 			// this function will be called repeatedly while game is running
 			// here game objects are updated and drawn
 
-			shortestPathArray = Utils.getShortestPathArray(gridArray)
 
-			// that.updateGameObjects();
+			that.updateGameObjects();
 			that.drawGameObjects();
 			if (!stopped) {
 				requestAnimation = window.requestAnimationFrame(startGameLoop, canvas);
@@ -58,18 +71,21 @@ function Dijkstra() {
 	}
 
 	that.generateGrid = (gridArray) => {
-		that.gameGrid = new Grid()
-		that.gameGrid.init(gridArray)
+		gameGrid = new Grid()
+		gameGrid.init(gridArray)
 	}
 
 	that.updateGameObjects = function() {
-		console.log('here')
-		that.gameGrid.update(keyState, endPosition)
+		gameGrid.update(gridArray, startPosition, endPosition)
+		enemy.update(gameGrid, endPosition)
+		player.update(gameGrid, startPosition)
 	}
 
 	that.drawGameObjects = function() {
 		gameUI.clear(0, 0, WIDTH, HEIGHT)
-		that.gameGrid.draw(shortestPathArray, endPosition)
+		gameGrid.draw(startPosition, endPosition)
+		enemy.draw()
+		player.draw()
 	}
 
 	that.bindKeysPressed = function() {
@@ -79,7 +95,7 @@ function Dijkstra() {
 
 		document.addEventListener('keypress', function(evt) {
 			keyState = evt.keyCode
-			that.updateGameObjects()
+			gameGrid.updatePlayerPos(keyState, startPosition)
 		});
 
 		document.addEventListener('keyup', function(evt) {
