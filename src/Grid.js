@@ -27,6 +27,7 @@ function Grid() {
                 let gridObj = new GridObject()
                 gridObj.x = j * (that.gridWidth)
                 gridObj.y = i * (that.gridWidth)
+                gridObj.gridWidth = that.gridWidth
                 gridObj.type = gridArray[i][j]
                 that.gridArray.push(gridObj)
                 that.gridLengthX = that.gridLengthX < j + 1 ? j + 1 : that.gridLengthX 
